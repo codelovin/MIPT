@@ -25,9 +25,12 @@ class SIMTask(object):
 
     def gershgorin_approximation(self):
         diag = self.A.diag()
-        sum_a = self.A.sum() - diag.sum()
-        minimum = diag - sum_a
-        maximum = diag + sum_a
+        dists = []
+        for i in range(self.A.shape()[0]):
+            dists.append(self.A.row(i).abs().sum() - abs(self.A.data[i][i]))
+
+        minimum = diag - Vector(dists)
+        maximum = diag + Vector(dists)
         lambda_min = minimum.min()
         lambda_max = maximum.max()
         tau = 2 / (lambda_min + lambda_max)
