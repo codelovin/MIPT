@@ -82,7 +82,7 @@ class Matrix(object):
 
     def diag(self):
         N = self.shape()[0]
-        return self.data[np.arange(N), np.arange(N)]
+        return Vector(self.data[np.arange(N), np.arange(N)])
 
     def sum(self):
         return self.data.sum()
@@ -92,6 +92,9 @@ class Matrix(object):
 
     def max(self):
         return np.max(self.data)
+
+    def abs(self):
+        return Matrix(np.abs(self.data))
 
     def __str__(self):
         s = ''
@@ -114,6 +117,9 @@ class Vector(Matrix):
         if isinstance(self, Vector):
             return Vector(self.data * other.data)
         return Vector(self.data * other)
+
+    def abs(self):
+        return Vector(np.abs(self.data))
 
     def dot_product(self, other):
         return (self * other).sum()
